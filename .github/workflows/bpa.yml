@@ -32,4 +32,4 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - run: ../../bpa_check.py
+      - run: python bpa_check.py
