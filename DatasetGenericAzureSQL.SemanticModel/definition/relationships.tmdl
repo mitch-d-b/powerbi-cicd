@@ -1,0 +1,8 @@
+relationship 01216053-5408-1afb-576d-aa67be28f499
+	fromColumn: 'Fact Internet Sales'.OrderDate
+	toColumn: 'Dim Date'.FullDateAlternateKey
+
+relationship 74dfbefc-d1e7-13e3-9a01-d59302f66279
+	fromColumn: FactFinanceDQ.Date
+	toColumn: 'Dim Date'.FullDateAlternateKey
+

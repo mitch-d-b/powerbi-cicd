@@ -1,0 +1,152 @@
+table 'Dim Date'
+	lineageTag: a5f0c201-3da8-4d66-9b47-50225f0240b5
+
+	column DateKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 349d238f-029f-401d-b28e-e9b28dec71ae
+		summarizeBy: count
+		sourceColumn: DateKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullDateAlternateKey
+		dataType: dateTime
+		isHidden
+		isKey
+		formatString: Long Date
+		lineageTag: e889c2e5-7161-42e8-9f5d-ebcdca3a1a04
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: FullDateAlternateKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DayNumberOfWeek
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d86b628c-b9ea-46d1-889b-64cdf85f8f36
+		summarizeBy: sum
+		sourceColumn: DayNumberOfWeek
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnglishDayNameOfWeek
+		dataType: string
+		lineageTag: 56dad519-e395-4ff6-b2ff-f574c6b63173
+		summarizeBy: none
+		sourceColumn: EnglishDayNameOfWeek
+		sortByColumn: DayNumberOfWeek
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayNumberOfMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 85fe7e13-4681-48c8-a7db-29cf891a37e0
+		summarizeBy: sum
+		sourceColumn: DayNumberOfMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayNumberOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 120ce08a-7138-4f55-9667-53a33915de72
+		summarizeBy: sum
+		sourceColumn: DayNumberOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekNumberOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 73964f85-be4c-41b6-a891-60047694cecc
+		summarizeBy: sum
+		sourceColumn: WeekNumberOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnglishMonthName
+		dataType: string
+		lineageTag: 5fc5261e-f73a-4641-9481-f6e0db1baf96
+		summarizeBy: none
+		sourceColumn: EnglishMonthName
+		sortByColumn: MonthNumberOfYear
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumberOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: c30eeea4-5991-45ee-8271-c6154bdcdb58
+		summarizeBy: sum
+		sourceColumn: MonthNumberOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarQuarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 335bb29a-4515-4281-a4cd-fed9e27aa7bd
+		summarizeBy: sum
+		sourceColumn: CalendarQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: afd4db0b-3231-46ac-81d3-678bcaacd382
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Date' = m
+		mode: import
+		queryGroup: Dimensions
+		source = ```
+				let
+				    Source        = Sql.Database(ServerName, DatabaseName),
+				    //Sample table: dbo.DimDate
+				    View          = Source{[Schema="dbo",Item="DimDate"]}[Data],
+				    SelectColumns = Table.SelectColumns(
+				                        View,
+				                        {
+				                            "DateKey", 
+				                            "FullDateAlternateKey", 
+				                            "DayNumberOfWeek", 
+				                            "EnglishDayNameOfWeek", 
+				                            "DayNumberOfMonth", 
+				                            "DayNumberOfYear", 
+				                            "WeekNumberOfYear", 
+				                            "EnglishMonthName", 
+				                            "MonthNumberOfYear", 
+				                            "CalendarQuarter", 
+				                            "CalendarYear"
+				                        }
+				                    ),
+				    InDevelopment = if(InDevelopment) then Table.FirstN(SelectColumns, NumberOfRecords) else SelectColumns
+				in
+				    InDevelopment
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
