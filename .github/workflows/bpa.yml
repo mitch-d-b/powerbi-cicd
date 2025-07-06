@@ -26,10 +26,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11' 
-      - run: pip install semantic-link-labs
+      # - run: pip install semantic-link-labs
 
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - run: bpa_check.py
+      - run: ../../bpa_check.py
