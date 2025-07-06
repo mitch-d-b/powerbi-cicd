@@ -1,5 +1,5 @@
 def check_this() -> str:
-	return "You just triggered check_this"
+	print("You just triggered check_this")
 
 
 if __name__ == "__main__":
