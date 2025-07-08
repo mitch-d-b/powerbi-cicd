@@ -20,4 +20,4 @@ jobs:
           uses: actions/checkout@v4
 
         - name: Semantic Models
-          run: .\scripts\bpa-semanticmodel.ps1 -path "." -src "./src/*.SemanticModel"
+          run: .\scripts\bpa-semanticmodel.ps1 -path "." -src "./*.SemanticModel"
