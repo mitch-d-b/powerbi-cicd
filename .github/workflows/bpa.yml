@@ -21,4 +21,4 @@ jobs:
 
         - name: Semantic Models
           shell: pwsh
-          run: .\scripts\bpa-semanticmodel.ps1 -path "." -src "./*.SemanticModel"
+          run: .\scripts\bpa-model.ps1 -path "." -src "./*.SemanticModel"
