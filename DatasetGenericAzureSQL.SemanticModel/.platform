@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "DatasetGenericAzureSQL"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bd06021e-4887-4e80-aab7-39480906efe3"
+  }
+}

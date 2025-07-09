@@ -1,0 +1,220 @@
+table 'Fact Internet Sales'
+	lineageTag: 11be9990-41be-4cce-bda4-6fe242cc7cf0
+
+	column ProductKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2709fa46-37d0-482c-bad7-7fdb88a027c3
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column CustomerKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d54ef79b-33ce-4b61-b44d-7b700ea3501c
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column PromotionKey
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e5d3a95b-55ff-49f3-90f9-459729995c14
+		summarizeBy: none
+		sourceColumn: PromotionKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: 34bbe743-1782-4542-8269-de9450c30601
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = User
+
+	column SalesOrderLineNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: c89e306e-ecc8-4e72-8b2d-c3f0cb9d7657
+		summarizeBy: none
+		sourceColumn: SalesOrderLineNumber
+
+		annotation SummarizationSetBy = User
+
+	column RevisionNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: d6ecce5d-7b01-4c90-b421-59f30649490c
+		summarizeBy: none
+		sourceColumn: RevisionNumber
+
+		annotation SummarizationSetBy = User
+
+	column OrderQuantity
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cbba3437-17ba-4942-983d-057634f9a975
+		summarizeBy: none
+		sourceColumn: OrderQuantity
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column UnitPrice
+		dataType: decimal
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 6874d023-8d8e-4555-8061-7865cac43edc
+		summarizeBy: none
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column ExtendedAmount
+		dataType: decimal
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 76be9d2e-d0f3-4ef4-bee0-2bb363aa4621
+		summarizeBy: none
+		sourceColumn: ExtendedAmount
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column DiscountAmount
+		dataType: double
+		isHidden
+		lineageTag: 94417dee-57e6-4a4b-910a-5e00ecf4a2e9
+		summarizeBy: none
+		sourceColumn: DiscountAmount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesAmount
+		dataType: decimal
+		isHidden
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 948191c1-3da6-4ca2-abfc-e05623470715
+		summarizeBy: none
+		sourceColumn: SalesAmount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	column CarrierTrackingNumber
+		dataType: string
+		lineageTag: 41fcc15f-fe22-4dcd-805d-0b613e8118f1
+		summarizeBy: none
+		sourceColumn: CarrierTrackingNumber
+
+		annotation SummarizationSetBy = User
+
+	column CustomerPONumber
+		dataType: string
+		lineageTag: c7c888be-42d4-4e9b-99fc-b36a16ddec38
+		summarizeBy: none
+		sourceColumn: CustomerPONumber
+
+		annotation SummarizationSetBy = User
+
+	column OrderDate
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 0c62f613-bc33-4151-a10c-7a9ab04724e7
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column DueDate
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 691b6492-8abc-440e-9281-6543376a864b
+		summarizeBy: none
+		sourceColumn: DueDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column ShipDate
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 6faecc15-49b3-4e63-b33d-f870cee0c513
+		summarizeBy: none
+		sourceColumn: ShipDate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition 'Fact Internet Sales' = m
+		mode: import
+		queryGroup: Facts
+		source = ```
+				let
+				    Source        = Sql.Database(ServerName, DatabaseName),
+				    //Sample table: dbo.FactInternetSales
+				    View          = Source{[Schema="dbo",Item="FactInternetSales"]}[Data],
+				    SetIRDates    = Table.SelectRows(View, each [OrderDate] >= RangeStart and [OrderDate] < RangeEnd),
+				    SelectColumns = Table.SelectColumns(
+				                        SetIRDates,
+				                        {
+				                            "ProductKey", 
+				                            "CustomerKey", 
+				                            "PromotionKey", 
+				                            "SalesOrderNumber", 
+				                            "SalesOrderLineNumber", 
+				                            "RevisionNumber", 
+				                            "OrderQuantity", 
+				                            "UnitPrice", 
+				                            "ExtendedAmount", 
+				                            "DiscountAmount", 
+				                            "SalesAmount", 
+				                            "CarrierTrackingNumber", 
+				                            "CustomerPONumber", 
+				                            "OrderDate", 
+				                            "DueDate", 
+				                            "ShipDate"
+				                        }
+				                    ),
+				    InDevelopment = if(InDevelopment) then Table.FirstN(SelectColumns, NumberOfRecords) else SelectColumns
+				in
+				    InDevelopment
+				```
+
+	annotation PBI_IsMQueryFoldable = True
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

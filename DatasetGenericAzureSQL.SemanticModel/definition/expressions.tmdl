@@ -1,0 +1,54 @@
+/// Server URL D,T,A,P
+expression ServerName = "mitchdbsql.database.windows.net" meta [IsParameterQuery=true, List={"devserverurl", "tstserverurl", "accserverurl", "prdserverurl", "mitchdbsql.database.windows.net"}, DefaultValue="devserverurl", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 84f92cdc-2406-4746-ab26-680b1940b1ed
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// Database name D, T, A, P
+expression DatabaseName = "AdventureWorksDW2014" meta [IsParameterQuery=true, List={"devdatabasename", "tstdatabasename", "accdatabasename", "prddatabasename", "AdventureWorksDW2014"}, DefaultValue="devdatabasename", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0c79d215-33e7-408d-8af7-f7aa62f69a04
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// Integer value that determines the number of records loaded when InDevelopment
+expression NumberOfRecords = 10 meta [IsParameterQuery=true, List={1, 10, 10000, 1000000}, DefaultValue=1, Type="Number", IsParameterQueryRequired=true]
+	lineageTag: c7e53afc-b009-4b00-94de-59a50386b86e
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Number
+
+/// Boolean that determines whether the number of records loaded are capped ar NumberOfRecords
+expression InDevelopment = false meta [IsParameterQuery=true, List={true, false}, DefaultValue=true, Type="Logical", IsParameterQueryRequired=true]
+	lineageTag: 9fdbb599-0984-4c9f-9a52-a9086a3560f0
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Logical
+
+/// Reserved parameter for use with incremental refresh
+expression RangeStart = #datetime(2018, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 11c7ce71-8cbf-4b9e-8cf9-cbeb1a3418d8
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+
+/// Reserved parameter
+expression RangeEnd = #datetime(2025, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 7f23740c-9d17-4207-b9c7-d81b04a32067
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = DateTime
+

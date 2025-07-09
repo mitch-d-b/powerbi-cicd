@@ -1,0 +1,105 @@
+table FactFinanceDQ
+	lineageTag: d6fd9dcb-7770-436d-95ab-9ab94c089453
+
+	column FinanceKey
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 3390d1f5-a0e3-4ab2-a5e9-c77273ca7963
+		summarizeBy: count
+		sourceColumn: FinanceKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e15769dc-afc0-4390-aa1a-fb4c1700e255
+		summarizeBy: count
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrganizationKey
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 52dd96c9-e81d-4d0f-a739-01cdb4bd7a36
+		summarizeBy: count
+		sourceColumn: OrganizationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartmentGroupKey
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 1350dd5a-c8ce-403b-ad13-dc1be7018502
+		summarizeBy: count
+		sourceColumn: DepartmentGroupKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ScenarioKey
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 55512f77-02cc-4b93-86dc-c6b33de93983
+		summarizeBy: count
+		sourceColumn: ScenarioKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccountKey
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: d6271789-66b7-4ed5-b0c5-286e93dfe996
+		summarizeBy: count
+		sourceColumn: AccountKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		isNullable: false
+		sourceProviderType: float
+		lineageTag: 90f29153-5a5e-484c-88fe-570b78847f8c
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime
+		lineageTag: 433abf87-8734-4cff-b1dd-8f96b42acc17
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactFinanceDQ = m
+		mode: directQuery
+		queryGroup: Facts
+		source =
+				let
+				    Source = Sql.Database(ServerName, DatabaseName),
+				    dbo_FactFinance = Source{[Schema="dbo",Item="FactFinance"]}[Data]
+				in
+				    dbo_FactFinance
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
