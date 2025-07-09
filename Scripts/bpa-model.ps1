@@ -31,7 +31,8 @@ if ($src) {
         Remove-Item $zipFile          
     }    
     
-    $rulesPath = "$currentFolder\bpa-semanticmodel-rules.json"
+    # $rulesPath = "$currentFolder\bpa-semanticmodel-rules.json"
+	$rulesPath = ".\..\Scripts\custom-semanticmodel-bpa-rules.json"
 
     if (!(Test-Path $rulesPath))
     {

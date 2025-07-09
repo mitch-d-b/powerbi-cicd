@@ -1,10 +1,11 @@
-name: bpa
+name: Best Practice Analyzer
   
 on:
 
   pull_request:
     branches: 
-      - main      
+      - main
+      - feature*      
     paths:
       - '**/*.SemanticModel/**'
   
@@ -19,6 +20,6 @@ jobs:
         - name: Check out the code
           uses: actions/checkout@v4
 
-        - name: Semantic Models
+        - name: Check all semantic models
           shell: pwsh
           run: .\scripts\bpa-model.ps1 -path "." -src "./*.SemanticModel"
